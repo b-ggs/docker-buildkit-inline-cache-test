@@ -14,7 +14,6 @@ jobs:
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             -t bxggs/docker-buildkit-inline-cache-test-stage-1a \
             --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1a:latest \
-            -f Dockerfile.new \
             --target stage-1A \
             .
 
@@ -23,7 +22,6 @@ jobs:
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             -t bxggs/docker-buildkit-inline-cache-test-stage-1b \
             --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1b:latest \
-            -f Dockerfile.new \
             --target stage-1B \
             .
 
@@ -32,7 +30,6 @@ jobs:
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             -t bxggs/docker-buildkit-inline-cache-test-stage-2 \
             --cache-from bxggs/docker-buildkit-inline-cache-test-stage-2:latest \
-            -f Dockerfile.new \
             --target stage-2 \
             .
       - uses: docker/build-push-action@v5
