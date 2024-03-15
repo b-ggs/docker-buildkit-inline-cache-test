@@ -33,11 +33,11 @@ jobs:
             --cache-from bxggs/docker-buildkit-inline-cache-test-stage-2:latest \
             --target stage-2 \
             .
-      - uses: docker/build-push-action@v5
+      - uses: docker/login-action@v3
         with:
-          context: .
-          push: true
-          tags: |
-            bxggs/docker-buildkit-inline-cache-test-stage-1a:latest
-            bxggs/docker-buildkit-inline-cache-test-stage-1b:latest
-            bxggs/docker-buildkit-inline-cache-test-stage-2:latest
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - run: |
+          docker push bxggs/docker-buildkit-inline-cache-test-stage-1a
+          docker push bxggs/docker-buildkit-inline-cache-test-stage-1b
+          docker push bxggs/docker-buildkit-inline-cache-test-stage-2
