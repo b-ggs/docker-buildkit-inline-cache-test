@@ -13,24 +13,10 @@ jobs:
           docker \
             build \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
-            -t bxggs/docker-buildkit-inline-cache-test-stage-1a \
-            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1a:latest \
-            --target stage-1A \
-            .
-
-          docker \
-            build \
-            --build-arg BUILDKIT_INLINE_CACHE=1 \
-            -t bxggs/docker-buildkit-inline-cache-test-stage-1b \
-            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1b:latest \
-            --target stage-1B \
-            .
-
-          docker \
-            build \
-            --build-arg BUILDKIT_INLINE_CACHE=1 \
             -t bxggs/docker-buildkit-inline-cache-test-stage-2 \
             --cache-from bxggs/docker-buildkit-inline-cache-test-stage-2:latest \
+            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1b:latest \
+            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1a:latest \
             --target stage-2 \
             .
       - uses: docker/login-action@v3
