@@ -1,0 +1,42 @@
+name: ci
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          docker \
+            build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t bxggs/docker-buildkit-inline-cache-test-stage-1a \
+            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1a:latest \
+            -f Dockerfile.new \
+            --target stage-1A \
+            .
+
+          docker \
+            build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t bxggs/docker-buildkit-inline-cache-test-stage-1b \
+            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-1b:latest \
+            -f Dockerfile.new \
+            --target stage-1B \
+            .
+
+          docker \
+            build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t bxggs/docker-buildkit-inline-cache-test-stage-2 \
+            --cache-from bxggs/docker-buildkit-inline-cache-test-stage-2:latest \
+            -f Dockerfile.new \
+            --target stage-2 \
+            .
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            bxggs/docker-buildkit-inline-cache-test-stage-1a:latest
+            bxggs/docker-buildkit-inline-cache-test-stage-1b:latest
+            bxggs/docker-buildkit-inline-cache-test-stage-2:latest
